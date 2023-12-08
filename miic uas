@@ -1,0 +1,58 @@
+from tkinter import *
+
+root = Tk()
+root.title("Warung Internet")
+
+label = Label(root, text="Selamat datang di Warung Internet")
+label.pack()
+
+hours_label = Label(root, text="Jumlah Jam:")
+hours_label.pack()
+hours_entry = Entry(root)
+hours_entry.pack()
+
+calculate_button = Button(root, text="Hitung Biaya")
+calculate_button.pack()
+
+result_label Label(root, text="")
+result_label.pack()
+
+root.mainloop()
+def hitung_biaya():
+    try:
+        jam = int(hours_entry.get())
+        biaya = jam * 5000  # Misalnya biaya per jam adalah Rp 5000
+        result_label.config(text="Biaya yang harus dibayar: Rp " + str(biaya))
+    except ValueError:
+        result_label.config(text="Masukkan jumlah jam yang valid")
+        from midtransclient import CoreApi
+
+# Inisialisasi objek midtrans client
+core = CoreApi(
+    is_production=False,
+    server_key='YOUR_SERVER_KEY',
+    client_key='YOUR_CLIENT_KEY'
+)
+
+# Fungsi untuk melakukan pembayaran
+def bayar_biaya(biaya):
+    # Logika untuk melakukan pembayaran menggunakan midtrans
+    # ...
+
+# Menambahkan tombol pembayaran ke antarmuka pengguna
+pay_button = Button(root, text="Bayar Biaya", command=lambda: bayar_biaya(biaya))
+pay_button.pack()
+import sqlite3
+
+# Membuat atau terhubung ke database
+conn = sqlite3.connect('riwayat_internet.db')
+c = conn.cursor()
+
+# Membuat tabel riwayat internet jika belum ada
+c.execute('''CREATE TABLE IF NOT EXISTS riwayat_internet
+             (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, jam INTEGER, biaya INTEGER)''')
+
+# Memasukkan data riwayat penggunaan internet ke dalam database setelah pembayaran sukses
+def simpan_riwayat(user_id, jam, biaya):
+    c.execute("INSERT INTO")
+    
